@@ -8,5 +8,6 @@ import HeaderNavbar from 'components/HeaderNavbar.vue'
     <q-page-container>
       <router-view />
     </q-page-container>
+    <FooterSection />
   </q-layout>
 </template>
