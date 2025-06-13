@@ -1,3 +1,8 @@
+node_modules/
+dist/
+.quasar/
+.env
+.DS_Store
 .DS_Store
 .thumbs.db
 node_modules
@@ -5,6 +10,8 @@ node_modules
 # Quasar core related directories
 .quasar
 /dist
+
+
 /quasar.config.*.temporary.compiled*
 
 # Cordova related directories and files
@@ -32,5 +39,8 @@ yarn-error.log*
 # local .env files
 .env.local*
 
-# Local Netlify folder
-.netlify
+node_modules/
+dist/
+.quasar/
+.env
+.DS_Stor
