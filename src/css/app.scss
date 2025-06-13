@@ -1,1 +1,7 @@
 // app global css in SCSS form
+/* Override sticky footer behavior */
+q-footer,
+.q-footer {
+  position: static !important;
+  bottom: auto !important;
+}
