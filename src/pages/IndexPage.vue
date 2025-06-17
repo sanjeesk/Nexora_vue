@@ -209,6 +209,7 @@ const faqs = [
 .q-carousel-slide {
   display: flex;
   align-items: center;
+
   justify-content: center;
 }
 </style>
