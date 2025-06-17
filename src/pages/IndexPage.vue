@@ -1,7 +1,7 @@
 <template>
   <q-page class="bg-white">
     <!-- Hero Section -->
-    <section class="q-px-xl q-py-xl row items-center justify-between">
+    <section class="q-px-xl q-pt-xl q-pb-lg row items-center justify-between">
       <div class="col-12 col-md-6">
         <h1 class="text-h3 text-bold q-mb-md text-primary">We Help Brands Stand Out</h1>
         <p class="text-body1 q-mb-md text-dark">
@@ -20,47 +20,68 @@
     </section>
 
     <!-- Services Section -->
-    <section class="q-px-xl q-py-xl bg-grey-1">
-      <h2 class="text-h4 text-bold q-mb-lg text-center text-primary">Our Services</h2>
-      <div class="row q-col-gutter-lg">
-        <q-card class="col-12 col-md-3">
-          <q-card-section>
-            <q-icon name="photo_camera" size="40px" class="text-primary q-mb-md" />
-            <h3 class="text-subtitle1 text-bold text-dark">Photography</h3>
-            <p>Professional shoots that bring your brand's vision to life.</p>
-          </q-card-section>
-        </q-card>
+    <section class="q-px-xl q-pt-xl q-pb-lg bg-grey-1 text-center">
+      <h2 class="text-h4 text-bold q-mb-md text-primary">Our Services</h2>
+      <p class="text-body1 q-mb-xl text-grey-8">
+        We offer tailored creative solutions to help your brand grow and stand out — from strategy
+        to execution.
+      </p>
 
-        <q-card class="col-12 col-md-3">
-          <q-card-section>
-            <q-icon name="web" size="40px" class="text-primary q-mb-md" />
-            <h3 class="text-subtitle1 text-bold text-dark">Web Development</h3>
-            <p>Modern, responsive websites built for performance and impact.</p>
-          </q-card-section>
-        </q-card>
-
-        <q-card class="col-12 col-md-3">
-          <q-card-section>
-            <q-icon name="brush" size="40px" class="text-primary q-mb-md" />
-            <h3 class="text-subtitle1 text-bold text-dark">Branding</h3>
-            <p>Build a brand identity that sets you apart from the competition.</p>
-          </q-card-section>
-        </q-card>
-
-        <q-card class="col-12 col-md-3">
-          <q-card-section>
-            <q-icon name="design_services" size="40px" class="text-primary q-mb-md" />
-            <h3 class="text-subtitle1 text-bold text-dark">UI/UX Design</h3>
-            <p>Delight your users with intuitive and aesthetic digital experiences.</p>
-          </q-card-section>
-        </q-card>
+      <div class="row justify-center q-col-gutter-md q-gutter-md">
+        <div class="col-12 col-sm-6 col-md-3" v-for="(service, index) in services" :key="index">
+          <q-card class="service-card q-pa-md column items-center text-center">
+            <q-icon :name="service.icon" size="42px" class="text-primary q-mb-sm" />
+            <div class="text-subtitle1 text-bold text-dark q-mb-xs">{{ service.title }}</div>
+            <p class="text-body2 text-grey-9">{{ service.desc }}</p>
+          </q-card>
+        </div>
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="q-px-xl q-py-xl">
+    <!-- Process Section -->
+    <section class="q-px-xl q-pt-xl q-pb-lg text-center">
+      <h2 class="text-h4 text-bold q-mb-md text-primary">Our Process</h2>
+      <p class="text-body1 q-mb-xl text-grey-8">
+        From idea to execution, we follow a streamlined, client-focused process.
+      </p>
+      <div class="row justify-center q-col-gutter-lg">
+        <div class="col-12 col-sm-6 col-md-3" v-for="(step, i) in processSteps" :key="i">
+          <q-card flat class="q-pa-md text-center">
+            <q-icon :name="step.icon" size="40px" class="text-primary q-mb-sm" />
+            <div class="text-subtitle1 text-bold q-mb-xs">{{ step.title }}</div>
+            <p class="text-body2 text-grey-8">{{ step.desc }}</p>
+          </q-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Preview Section -->
+    <section class="q-px-xl q-pt-xl q-pb-lg">
+      <h2 class="text-h4 text-bold text-center q-mb-lg text-primary">Featured Work</h2>
+      <div class="row q-col-gutter-md q-gutter-md justify-center">
+        <div class="col-12 col-sm-6 col-md-4" v-for="n in 3" :key="n">
+          <q-img
+            :src="`https://source.unsplash.com/random/800x600?sig=${n}&creative`"
+            :ratio="4 / 3"
+            class="rounded-borders shadow-1"
+          />
+        </div>
+      </div>
+      <div class="text-center q-mt-lg">
+        <q-btn color="primary" label="See Full Portfolio" to="/portfolio" unelevated />
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="q-px-xl q-pt-xl q-pb-lg bg-grey-1">
       <h2 class="text-h4 text-bold q-mb-lg text-center text-primary">What Our Clients Say</h2>
-      <q-carousel animated swipeable navigation height="200px" class="bg-grey-2 rounded-borders">
+      <q-carousel
+        animated
+        swipeable
+        navigation
+        height="200px"
+        class="bg-white rounded-borders shadow-1"
+      >
         <q-carousel-slide v-for="(t, index) in testimonials" :key="index">
           <div class="q-pa-md text-center">
             <q-icon name="format_quote" size="40px" class="text-primary q-mb-md" />
@@ -71,8 +92,16 @@
       </q-carousel>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="q-px-xl q-pt-xl q-pb-lg text-center">
+      <h2 class="text-h4 text-bold q-mb-md text-primary">Frequently Asked Questions</h2>
+      <q-expansion-item v-for="(faq, i) in faqs" :key="i" :label="faq.q" expand-separator>
+        <div class="text-body2 text-grey-8 q-pa-sm">{{ faq.a }}</div>
+      </q-expansion-item>
+    </section>
+
     <!-- Call to Action -->
-    <section class="q-px-xl q-py-xl bg-primary text-white text-center">
+    <section class="q-px-xl q-pt-xl q-pb-xl bg-primary text-white text-center">
       <h2 class="text-h4 text-bold q-mb-md">Ready to Get Started?</h2>
       <p class="q-mb-lg">Let's bring your ideas to life with creative solutions that work.</p>
       <q-btn
@@ -88,6 +117,29 @@
 </template>
 
 <script setup>
+const services = [
+  {
+    icon: 'photo_camera',
+    title: 'Photography',
+    desc: 'Event, wedding, product, and brand shoots that bring your vision to life with cinematic style.',
+  },
+  {
+    icon: 'web',
+    title: 'Web Development',
+    desc: 'Responsive websites built for performance, aesthetics, and results — from landing pages to full platforms.',
+  },
+  {
+    icon: 'brush',
+    title: 'Branding',
+    desc: 'Logo design, visual identity, and brand strategy that builds recognition and emotional connection.',
+  },
+  {
+    icon: 'design_services',
+    title: 'UI/UX Design',
+    desc: 'Design systems and interfaces that are functional, beautiful, and user-friendly — mobile to web.',
+  },
+]
+
 const testimonials = [
   {
     quote: 'Nexora helped us refresh our brand image and boosted engagement.',
@@ -105,9 +157,55 @@ const testimonials = [
     company: 'Vibe Travel',
   },
 ]
+
+const processSteps = [
+  {
+    icon: 'lightbulb',
+    title: 'Discovery',
+    desc: 'We begin by understanding your goals and challenges.',
+  },
+  {
+    icon: 'task',
+    title: 'Planning',
+    desc: 'We develop strategies and design roadmaps tailored to your brand.',
+  },
+  {
+    icon: 'palette',
+    title: 'Design',
+    desc: 'Our team brings ideas to life with visually compelling designs.',
+  },
+  {
+    icon: 'rocket_launch',
+    title: 'Launch',
+    desc: 'We deploy and monitor to ensure quality and performance.',
+  },
+]
+
+const faqs = [
+  {
+    q: 'How long does a typical project take?',
+    a: 'Depending on complexity, it can range from 2 to 8 weeks.',
+  },
+  { q: 'Do you offer ongoing support?', a: 'Yes, we offer maintenance and support packages.' },
+  {
+    q: 'Can I request a custom package?',
+    a: 'Absolutely! We tailor every service to your needs and goals.',
+  },
+]
 </script>
 
 <style scoped>
+.service-card {
+  border-radius: 12px;
+  min-height: 220px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
 .q-carousel-slide {
   display: flex;
   align-items: center;
