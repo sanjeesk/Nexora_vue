@@ -11,11 +11,7 @@
         <q-btn color="primary" label="View Our Work" to="/portfolio" class="q-mt-sm" unelevated />
       </div>
       <div class="col-12 col-md-5">
-        <q-img
-          src="https://source.unsplash.com/featured/?creative,design"
-          alt="Creative Work"
-          :ratio="16 / 9"
-        />
+        <q-img src="../assets/img/hero 1.png" alt="Creative Work" :ratio="16 / 9" />
       </div>
     </section>
 
@@ -26,13 +22,16 @@
         We offer tailored creative solutions to help your brand grow and stand out — from strategy
         to execution.
       </p>
-
-      <div class="row justify-center q-col-gutter-md q-gutter-md">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(service, index) in services" :key="index">
+      <div class="row justify-center q-col-gutter-md q-gutter-md main_servieces">
+        <div
+          class="col-12 col-sm-6 col-md-3 service_items"
+          v-for="(service, index) in services"
+          :key="index"
+        >
           <q-card class="service-card q-pa-md column items-center text-center">
-            <q-icon :name="service.icon" size="42px" class="text-primary q-mb-sm" />
-            <div class="text-subtitle1 text-bold text-dark q-mb-xs">{{ service.title }}</div>
-            <p class="text-body2 text-grey-9">{{ service.desc }}</p>
+            <q-icon :name="service.icon" size="42px" class="light-blue-1 q-mb-sm" />
+            <div class="text-subtitle1 text-bold light-blue-1 q-mb-xs">{{ service.title }}</div>
+            <p class="text-body2 light-blue-1">{{ service.desc }}</p>
           </q-card>
         </div>
       </div>
@@ -55,20 +54,24 @@
       </div>
     </section>
 
-    <!-- Portfolio Preview Section -->
+    <!-- Case Studies Section -->
     <section class="q-px-xl q-pt-xl q-pb-lg">
-      <h2 class="text-h4 text-bold text-center q-mb-lg text-primary">Featured Work</h2>
-      <div class="row q-col-gutter-md q-gutter-md justify-center">
-        <div class="col-12 col-sm-6 col-md-4" v-for="n in 3" :key="n">
-          <q-img
-            :src="`https://source.unsplash.com/random/800x600?sig=${n}&creative`"
-            :ratio="4 / 3"
-            class="rounded-borders shadow-1"
-          />
+      <h2 class="text-h4 text-bold text-center q-mb-lg text-primary">Case Studies</h2>
+      <div class="row q-col-gutter-md justify-center">
+        <div class="col-12 col-sm-6 col-md-4" v-for="(caseStudy, i) in caseStudies" :key="i">
+          <q-card class="q-pa-md column items-start shadow-1 rounded-borders">
+            <div class="text-subtitle1 text-bold q-mb-xs">{{ caseStudy.client }}</div>
+            <p class="text-body2 text-grey-8 q-mb-sm">{{ caseStudy.summary }}</p>
+            <q-btn
+              label="Read More"
+              color="primary"
+              flat
+              size="sm"
+              class="q-mt-sm"
+              :to="caseStudy.link"
+            />
+          </q-card>
         </div>
-      </div>
-      <div class="text-center q-mt-lg">
-        <q-btn color="primary" label="See Full Portfolio" to="/portfolio" unelevated />
       </div>
     </section>
 
@@ -155,6 +158,24 @@ const testimonials = [
     quote: 'From idea to launch, the team made it seamless.',
     name: 'Sarah Lim',
     company: 'Vibe Travel',
+  },
+]
+
+const caseStudies = [
+  {
+    client: 'Glow Skincare',
+    summary: 'Rebranded identity and built a new e-commerce experience.',
+    link: '/case-studies/glow-skincare',
+  },
+  {
+    client: 'Urban Vibe Studios',
+    summary: 'Improved website UI/UX for 3x faster lead conversion.',
+    link: '/case-studies/urban-vibe',
+  },
+  {
+    client: 'Vibe Travel',
+    summary: 'Launched a booking portal with real-time availability.',
+    link: '/case-studies/vibe-travel',
   },
 ]
 
