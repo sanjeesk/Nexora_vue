@@ -11,7 +11,12 @@
         <q-btn color="primary" label="View Our Work" to="/portfolio" class="q-mt-sm" unelevated />
       </div>
       <div class="col-12 col-md-5">
-        <q-img src="../assets/img/hero 1.png" alt="Creative Work" :ratio="16 / 9" />
+        <q-img
+          src="../assets/img/hero 1.png"
+          alt="Creative Work"
+          style="height: 100%; width: 100%; object-fit: cover"
+          class="rounded-borders"
+        />
       </div>
     </section>
 
@@ -19,81 +24,112 @@
     <section class="q-px-xl q-pt-xl q-pb-lg bg-grey-1 text-center">
       <h2 class="text-h4 text-bold q-mb-md text-primary">Our Services</h2>
       <p class="text-body1 q-mb-xl text-grey-8">
-        We offer tailored creative solutions to help your brand grow and stand out — from strategy
-        to execution.
+        We offer tailored creative solutions designed to help your brand grow, connect, and lead.
+        From strategic planning and brand storytelling to cutting-edge web design, UI/UX
+        experiences, and high-impact photography, our services are built to transform your ideas
+        into results. Whether you're launching a new brand or elevating an existing one, we're here
+        to guide you every step of the way — from concept to execution.
       </p>
       <div class="row justify-center q-col-gutter-md q-gutter-md main_servieces">
         <div
-          class="col-12 col-sm-6 col-md-3 service_items"
+          class="col-12 col-sm-6 col-md-6 service_items"
           v-for="(service, index) in services"
           :key="index"
         >
-          <q-card class="service-card q-pa-md column items-center text-center">
-            <q-icon :name="service.icon" size="42px" class="light-blue-1 q-mb-sm" />
-            <div class="text-subtitle1 text-bold light-blue-1 q-mb-xs">{{ service.title }}</div>
-            <p class="text-body2 light-blue-1">{{ service.desc }}</p>
-          </q-card>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div
+                class="flip-card-front q-pa-md column items-center text-center justify-center bg-primary"
+              >
+                <q-icon :name="service.icon" size="42px" class="light-blue-1 q-mb-sm" />
+                <div class="text-subtitle1 text-bold light-blue-1 q-mb-xs">{{ service.title }}</div>
+                <p class="text-body2 light-blue-1 w-80 q-mx-auto">{{ service.desc }}</p>
+              </div>
+              <div class="flip-card-back column items-center justify-center q-pa-md">
+                <q-icon name="link" size="36px" class="text-primary q-mb-sm" />
+                <q-btn
+                  color="primary"
+                  label="Learn More"
+                  :to="service.link"
+                  unelevated
+                  class="q-mt-sm"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Process Section -->
-    <section class="q-px-xl q-pt-xl q-pb-lg text-center">
-      <h2 class="text-h4 text-bold q-mb-md text-primary">Our Process</h2>
-      <p class="text-body1 q-mb-xl text-grey-8">
-        From idea to execution, we follow a streamlined, client-focused process.
+    <section class="q-px-xl q-pt-xl q-pb-lg">
+      <h2 class="text-h4 text-bold text-center q-mb-md text-primary">Our Process</h2>
+      <p class="text-body1 text-center q-mb-xl text-grey-8">
+        A clear, step-by-step journey from idea to launch.
       </p>
-      <div class="row justify-center q-col-gutter-lg">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(step, i) in processSteps" :key="i">
-          <q-card flat class="q-pa-md text-center">
-            <q-icon :name="step.icon" size="40px" class="text-primary q-mb-sm" />
-            <div class="text-subtitle1 text-bold q-mb-xs">{{ step.title }}</div>
+
+      <!-- Desktop View -->
+      <div v-if="isDesktop" class="relative-position q-mb-xl">
+        <div class="process-horizontal-line" />
+        <div class="row q-col-gutter-lg justify-between text-center">
+          <div
+            class="col-12 col-md-3 desktop-process-step"
+            v-for="(step, i) in processSteps"
+            :key="i"
+          >
+            <q-icon :name="step.icon" size="48px" color="primary" class="q-mb-sm step_border" />
+            <div class="text-h6 text-bold text-primary q-mb-xs">
+              Step {{ i + 1 }}: {{ step.title }}
+            </div>
             <p class="text-body2 text-grey-8">{{ step.desc }}</p>
-          </q-card>
+          </div>
         </div>
       </div>
+
+      <!-- Mobile View -->
+      <q-timeline v-else layout="dense" side="left" color="primary">
+        <q-timeline-entry
+          v-for="(step, i) in processSteps"
+          :key="i"
+          :title="step.title"
+          :icon="step.icon"
+          icon-color="primary"
+        >
+          <template v-slot:subtitle>
+            <span class="text-primary text-bold">Step {{ i + 1 }}</span>
+          </template>
+          <div class="text-body2 text-grey-8">{{ step.desc }}</div>
+        </q-timeline-entry>
+      </q-timeline>
     </section>
 
     <!-- Case Studies Section -->
-    <section class="q-px-xl q-pt-xl q-pb-lg">
-      <h2 class="text-h4 text-bold text-center q-mb-lg text-primary">Case Studies</h2>
-      <div class="row q-col-gutter-md justify-center">
-        <div class="col-12 col-sm-6 col-md-4" v-for="(caseStudy, i) in caseStudies" :key="i">
-          <q-card class="q-pa-md column items-start shadow-1 rounded-borders">
-            <div class="text-subtitle1 text-bold q-mb-xs">{{ caseStudy.client }}</div>
-            <p class="text-body2 text-grey-8 q-mb-sm">{{ caseStudy.summary }}</p>
-            <q-btn
-              label="Read More"
-              color="primary"
-              flat
-              size="sm"
-              class="q-mt-sm"
-              :to="caseStudy.link"
-            />
-          </q-card>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="q-px-xl q-pt-xl q-pb-lg bg-grey-1">
-      <h2 class="text-h4 text-bold q-mb-lg text-center text-primary">What Our Clients Say</h2>
+    <section class="q-px-xl q-pt-xl q-pb-xl bg-grey-2">
       <q-carousel
-        animated
-        swipeable
+        v-model="caseStudySlide"
+        arrows
         navigation
-        height="200px"
-        class="bg-white rounded-borders shadow-1"
+        control-color="primary"
+        animated
+        height="280px"
+        class="bg-white rounded-borders shadow-1 q-pa-md"
       >
-        <q-carousel-slide v-for="(t, index) in testimonials" :key="index">
-          <div class="q-pa-md text-center">
-            <q-icon name="format_quote" size="40px" class="text-primary q-mb-md" />
-            <p class="text-body1 italic">"{{ t.quote }}"</p>
-            <p class="text-bold q-mt-sm">- {{ t.name }}, {{ t.company }}</p>
+        <q-carousel-slide v-for="(caseStudy, i) in caseStudies" :key="i" :name="i" class="">
+          <div style="text-align: center; display: block; align-content: center">
+            <h2 class="text-h4 text-bold text-center q-mb-sm text-primary">Case Studies</h2>
+            <p class="text-body1 text-center text-grey-8">
+              Discover how we've transformed brands through design, development, and creative
+              direction.
+            </p>
+
+            <div class="text-subtitle1 text-bold">{{ caseStudy.client }}</div>
+            <p class="text-body2 text-grey-8 q-mb-sm">{{ caseStudy.summary }}</p>
           </div>
         </q-carousel-slide>
       </q-carousel>
     </section>
+
+    <!-- Testimonials Section -->
 
     <!-- FAQ Section -->
     <section class="q-px-xl q-pt-xl q-pb-lg text-center">
@@ -120,44 +156,39 @@
 </template>
 
 <script setup>
+import { QTimeline, QTimelineEntry } from 'quasar'
+import { useQuasar } from 'quasar'
+import { ref } from 'vue'
+
+const caseStudySlide = ref(0)
+
+import { computed } from 'vue'
+const $q = useQuasar()
+const isDesktop = computed(() => $q.screen.gt.md)
 const services = [
   {
     icon: 'photo_camera',
     title: 'Photography',
     desc: 'Event, wedding, product, and brand shoots that bring your vision to life with cinematic style.',
+    link: '/services/photography',
   },
   {
     icon: 'web',
     title: 'Web Development',
     desc: 'Responsive websites built for performance, aesthetics, and results — from landing pages to full platforms.',
+    link: '/services/web-dev',
   },
   {
     icon: 'brush',
     title: 'Branding',
     desc: 'Logo design, visual identity, and brand strategy that builds recognition and emotional connection.',
+    link: '/services/branding',
   },
   {
     icon: 'design_services',
     title: 'UI/UX Design',
     desc: 'Design systems and interfaces that are functional, beautiful, and user-friendly — mobile to web.',
-  },
-]
-
-const testimonials = [
-  {
-    quote: 'Nexora helped us refresh our brand image and boosted engagement.',
-    name: 'Amanda Lee',
-    company: 'Glow Skincare',
-  },
-  {
-    quote: 'Professional, creative and reliable. Highly recommended!',
-    name: 'David Tan',
-    company: 'Urban Vibe Studios',
-  },
-  {
-    quote: 'From idea to launch, the team made it seamless.',
-    name: 'Sarah Lim',
-    company: 'Vibe Travel',
+    link: '/services/uiux',
   },
 ]
 
@@ -183,22 +214,22 @@ const processSteps = [
   {
     icon: 'lightbulb',
     title: 'Discovery',
-    desc: 'We begin by understanding your goals and challenges.',
+    desc: 'We dive deep into your brand goals, audience, and challenges.',
   },
   {
     icon: 'task',
     title: 'Planning',
-    desc: 'We develop strategies and design roadmaps tailored to your brand.',
+    desc: 'We create a strategic plan for execution.',
   },
   {
     icon: 'palette',
     title: 'Design',
-    desc: 'Our team brings ideas to life with visually compelling designs.',
+    desc: 'We design visually engaging experiences.',
   },
   {
     icon: 'rocket_launch',
     title: 'Launch',
-    desc: 'We deploy and monitor to ensure quality and performance.',
+    desc: 'We launch and support your product post-release.',
   },
 ]
 
