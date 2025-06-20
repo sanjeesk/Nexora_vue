@@ -75,9 +75,9 @@
             <q-item clickable @click="go('/services/uiux')">
               <q-item-section>UI/UX Design</q-item-section>
             </q-item>
-            <q-item clickable @click="go('/services/others')">
+            <!-- <q-item clickable @click="go('/services/others')">
               <q-item-section>Others</q-item-section>
-            </q-item>
+            </q-item> -->
           </q-list>
         </q-expansion-item>
         <q-item clickable @click="go('/contact')">

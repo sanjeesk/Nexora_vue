@@ -1,21 +1,36 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <!-- ✅ HEADER -->
-    <!-- Header -->
     <q-header elevated class="bg-white text-dark">
-      <q-toolbar class="q-px-xl q-py-sm justify-between header-height">
-        <q-toolbar-title @click="go('/')">Nexora</q-toolbar-title>
+      <q-toolbar class="q-px-xl q-py-sm justify-between header-height flex">
+        <q-toolbar-title @click="go('/')">
+          <img src="../assets/img/Nexora_logo.png/" alt="Nexora Logo" style="cursor: pointer" />
+        </q-toolbar-title>
 
-        <!-- ✅ Desktop Navigation - Hidden on mobile -->
+        <!-- ✅ Desktop Navigation -->
         <div class="row items-center q-gutter-md gt-sm">
-          <q-btn flat label="Home" @click="go('/')" />
-          <q-btn flat label="About" @click="go('/about')" />
+          <q-btn
+            flat
+            label="Home"
+            :text-color="isActive('/') ? 'primary' : 'dark'"
+            @click="go('/')"
+          />
+          <q-btn
+            flat
+            label="About"
+            :text-color="isActive('/about') ? 'primary' : 'dark'"
+            @click="go('/about')"
+          />
           <div
             class="relative-position"
             @mouseenter="openServicesMenu"
             @mouseleave="closeServicesMenuDelayed"
           >
-            <q-btn flat class="row items-center no-caps">
+            <q-btn
+              flat
+              class="row items-center no-caps"
+              :text-color="isServiceRoute ? 'primary' : 'dark'"
+            >
               <span>Services</span>
               <q-icon name="keyboard_arrow_down" class="q-ml-xs" />
             </q-btn>
@@ -39,30 +54,32 @@
                 <q-item clickable @click="go('/services/uiux')">
                   <q-item-section>UI/UX Design</q-item-section>
                 </q-item>
-                <q-item clickable @click="go('/services/others')">
-                  <q-item-section>Others</q-item-section>
-                </q-item>
               </q-list>
             </q-menu>
           </div>
-          <q-btn flat label="Contact" @click="go('/contact')" />
+          <q-btn
+            flat
+            label="Contact"
+            :text-color="isActive('/contact') ? 'primary' : 'dark'"
+            @click="go('/contact')"
+          />
         </div>
 
-        <!-- ✅ Mobile Hamburger Button - Hidden on desktop -->
+        <!-- ✅ Mobile Hamburger -->
         <q-btn dense flat icon="menu" class="lt-md" @click="drawer = true" />
       </q-toolbar>
     </q-header>
 
-    <!-- ✅ Drawer for Mobile -->
+    <!-- ✅ Drawer (Mobile Navigation) -->
     <q-drawer v-model="drawer" side="right" overlay behavior="mobile" :width="250">
       <q-list padding>
-        <q-item clickable @click="go('/')">
+        <q-item clickable :active="isActive('/')" @click="go('/')">
           <q-item-section>Home</q-item-section>
         </q-item>
-        <q-item clickable @click="go('/about')">
+        <q-item clickable :active="isActive('/about')" @click="go('/about')">
           <q-item-section>About</q-item-section>
         </q-item>
-        <q-expansion-item label="Services">
+        <q-expansion-item label="Services" :header-class="isServiceRoute ? 'text-primary' : ''">
           <q-list>
             <q-item clickable @click="go('/services/photography')">
               <q-item-section>Photography</q-item-section>
@@ -76,18 +93,15 @@
             <q-item clickable @click="go('/services/uiux')">
               <q-item-section>UI/UX Design</q-item-section>
             </q-item>
-            <q-item clickable @click="go('/services/others')">
-              <q-item-section>Others</q-item-section>
-            </q-item>
           </q-list>
         </q-expansion-item>
-        <q-item clickable @click="go('/contact')">
+        <q-item clickable :active="isActive('/contact')" @click="go('/contact')">
           <q-item-section>Contact</q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
 
-    <!-- ✅ MAIN PAGE CONTENT -->
+    <!-- ✅ PAGE CONTENT -->
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -125,10 +139,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 const drawer = ref(false)
 const servicesMenu = ref(false)
 let closeTimer = null
@@ -138,6 +153,13 @@ function go(path) {
   drawer.value = false
   servicesMenu.value = false
 }
+
+function isActive(path) {
+  return route.path === path
+}
+
+// Services section active state (for parent dropdown)
+const isServiceRoute = computed(() => route.path.startsWith('/services'))
 
 function openServicesMenu() {
   clearTimeout(closeTimer)
