@@ -1,5 +1,5 @@
 <template>
-  <q-footer class="bg-white text-dark q-pt-xl q-pb-lg shadow-up">
+  <q-footer class="bg-white text-dark q-px-xl q-pt-xl q-pb-lg shadow-up">
     <div class="container q-px-md">
       <!-- Top Grid -->
       <div class="row q-col-gutter-lg q-mb-xl">
